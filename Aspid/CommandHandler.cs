@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using System.Linq;
+using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
@@ -36,6 +37,12 @@ namespace Aspid
                 //command executing
                 if(message.HasStringPrefix(Config.bot.Prefix, ref argPos))
                 {
+                    //Checks author roles. If there is "Punished" role - it restricts bot using
+                    if ((message.Author as SocketGuildUser).Roles.Contains((message.Channel as SocketGuildChannel).Guild.Roles.FirstOrDefault(x => x.Name == "Punished")))
+                    {
+                        await (message.Channel as ISocketMessageChannel).DeleteMessageAsync(message);
+                        return;
+                    }
                     var result = await _service.ExecuteAsync(context, argPos, services: null);
                     if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
                     {

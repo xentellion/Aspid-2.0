@@ -4,41 +4,33 @@ using Discord.WebSocket;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using YamlDotNet.RepresentationModel;
 
 namespace Aspid
 {
     public class CommandTools : ModuleBase<SocketCommandContext>
     {
-        //Access YAML localization files
-        public string Text(string text)
+        [Command("reset")]
+        public async Task ResetLanguage()
         {
-            YamlDotNet.RepresentationModel.YamlMappingNode Node;
-
-            if (Config.Countries.Contains(Context.Guild.VoiceRegionId))
-                Program.mapping.TryGetValue(Context.Guild.VoiceRegionId, out Node);
-            else
-                Program.mapping.TryGetValue("english", out Node);
-
-            Node.Children.TryGetValue(text, out YamlDotNet.RepresentationModel.YamlNode answer);
-            return answer.ToString();
+            for (int i = 0; i < Config.Countries.Length; i++)
+            {
+                using var reader = new System.IO.StreamReader(Config.configPath + $"/localization/{Config.Countries[i]}.yml");
+                var yaml = new YamlStream();
+                yaml.Load(reader);
+                Program.mapping.Add(Config.Countries[i], (YamlMappingNode)yaml.Documents[0].RootNode);
+            }
+            await Context.Channel.SendMessageAsync("Language packages had been reset");
         }
-
+        
         //Add emotion to context message
         public async Task Emotion(string emotion)
         {
             await Context.Message.AddReactionAsync(Emote.Parse(emotion));
         }
 
-        //restrict using command if user is punished
-        public async Task Check()
-        {
-            if ((Context.User as SocketGuildUser).Roles
-                .Contains(Context.Guild.Roles.FirstOrDefault(x => x.Name == "Punished")))
-                await Context.Channel.DeleteMessageAsync(Context.Message); return;
-        }
-
         //Adapt input text for HTML use
-        public string EnterRepacer(string line)
+        public static string EnterRepacer(string line)
         {
             string a = line.Replace((char)10, '|');
             a = a.Replace("|", "<br>");

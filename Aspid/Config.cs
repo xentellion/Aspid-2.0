@@ -9,6 +9,7 @@ namespace Aspid
     class Config
     {
         //Yep. This is where i keep files
+        public static Random random = new Random();
         static string LinuxFolder { get; } = "/home/xentellion/Aspid/Data";
         static string WindowsFolder { get; } = $"{System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)}/Xentellion/Aspid";
 
@@ -63,7 +64,7 @@ namespace Aspid
 
             for (int i = 0; i < Countries.Length; i++)
             {
-                using var reader = new System.IO.StreamReader($"C:\\Users\\Xentellion\\Documents\\Xentellion\\Aspid\\localization\\{Countries[i]}.yml");
+                using var reader = new System.IO.StreamReader(configPath + $"/localization/{Countries[i]}.yml");
                 var yaml = new YamlStream();
                 yaml.Load(reader);
                 Program.mapping.Add(Countries[i], (YamlMappingNode)yaml.Documents[0].RootNode);
