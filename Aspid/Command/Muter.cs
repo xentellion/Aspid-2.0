@@ -23,6 +23,7 @@ namespace Aspid.Command
             char time = timer.Last();
             string length = timer.Substring(0, timer.Length - 1);
             int muteTime = Convert.ToInt32(length);
+            int outputTime = muteTime;
             string longitud = "";
 
             switch (time)
@@ -60,7 +61,7 @@ namespace Aspid.Command
 
             await ls.SendMessageAsync("", false, new EmbedBuilder()
                 .WithTitle(Text("mute_head"))
-                .WithDescription(Text("mute_1") + Context.Guild.Name + Text("mute_2") + muteTime + " " + longitud + Text("mute_3") + reason)
+                .WithDescription(Text("mute_1") + Context.Guild.Name + Text("mute_2") + outputTime + " " + longitud + Text("mute_3") + reason)
                 .WithColor(Color.Red)
                 .WithThumbnailUrl("https://media.discordapp.net/attachments/603600328117583874/615150515709411357/ezgif.com-gif-maker_31.gif")
                 .WithCurrentTimestamp()

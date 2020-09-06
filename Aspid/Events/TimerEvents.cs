@@ -53,7 +53,11 @@ namespace Aspid.Events
 
                         IEnumerable<SocketGuildUser> users = guild.Users.Where(x => x.Roles.Contains(role as SocketRole));
 
-                        foreach (SocketGuildUser a in users) await (a as IGuildUser).RemoveRoleAsync(role);
+                        foreach (SocketGuildUser a in users)
+                        {
+                            try { await (a as IGuildUser).RemoveRoleAsync(role); }
+                            catch(Discord.Net.HttpException) { continue; }
+                        }
                     }
                     Config.SaveDead();
                 }
