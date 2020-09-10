@@ -69,7 +69,7 @@
                         #inv { 
                                 width:700px; 
                                 border: 30px;
-                                -webkit-border-image:url(https://media.discordapp.net/attachments/708001747842498623/733980760020877352/master_ramka.png) 30 stretch stretch;
+                                -webkit-border-image:url(https://cdn.discordapp.com/attachments/708001747842498623/734048144689725500/master_ramka2.png) 30 stretch stretch;
                                 float:left; 
                                 margin: 7px;
                                 text-align:center;
@@ -77,7 +77,7 @@
                         #skills { 
                                 width:740px; 
                                 border: 30px;
-                                -webkit-border-image:url(https://media.discordapp.net/attachments/708001747842498623/733980760020877352/master_ramka.png) 30 stretch stretch;
+                                -webkit-border-image:url(https://cdn.discordapp.com/attachments/708001747842498623/734048144689725500/master_ramka2.png) 30 stretch stretch;
                                 float:left; 
                                 margin: 7px;
                                 text-align:center;
